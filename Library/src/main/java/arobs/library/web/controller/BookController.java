@@ -35,7 +35,7 @@ public class BookController {
     List<BookWithoutCopiesDTO> getAllBooksWithoutCopies(){
         logger.trace("In BookController, method=getAllBooksWithoutCopies");
         List<Book> books = bookService.findAllBooksWithoutCopies();
-        logger.trace("In BookController, method=getAllBooksWithoutCopies, books={}", books);
+        //logger.trace("In BookController, method=getAllBooksWithoutCopies, books={}", books);
         return new ArrayList<>(bookWithoutCopiesConverter.convertModelsToDtos(books));
     }
 

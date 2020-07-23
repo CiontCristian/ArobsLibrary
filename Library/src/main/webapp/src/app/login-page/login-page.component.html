@@ -1,0 +1,9 @@
+<header>
+  <h2>Login</h2>
+</header>
+<div class="container">
+  Email: <input type="text" placeholder="Email" #email><br/>
+  Password: <input type="password" placeholder="Password" #password><br/>
+  <br/>
+  <button (click)="login(email.value, password.value); email.value=''; password.value='';">Login</button>
+</div>

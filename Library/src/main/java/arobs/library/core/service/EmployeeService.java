@@ -12,4 +12,5 @@ public interface EmployeeService {
     Employee saveEmployee(Employee employee);
     Optional<Employee> modifyEmployee(Employee employee);
     void deleteEmployee(Long id);
+    Optional<Employee> getEmployeeByEmail(String email);
 }

@@ -44,4 +44,12 @@ public class EmployeeServiceImpl implements EmployeeService{
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Employee> getEmployeeByEmail(String email) {
+        return employeeRepository.findAll().stream()
+                .filter(employee -> employee.getEmail().equals(email)).findFirst();
+    }
+
+
 }

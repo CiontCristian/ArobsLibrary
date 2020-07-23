@@ -1,0 +1,14 @@
+<header>
+  <h2>Register</h2>
+</header>
+<div class="container">
+  Name: <input type="text" placeholder="Name" #name><br/>
+  Email: <input type="text" placeholder="Email" #email><br/>
+  Role:<br/>
+  <input type="radio" value="Admin" [(ngModel)]="role">Admin
+  <input type="radio" value="Regular" [(ngModel)]="role">Regular
+  <br/>
+  Password: <input type="password" placeholder="Password" #password><br/>
+
+  <button (click)="register(name.value, email.value, password.value)">Register</button>
+</div>

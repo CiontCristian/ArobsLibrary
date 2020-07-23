@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 @Entity
 @Data
 @Builder
-@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Copy extends BaseEntity<Long> {
@@ -22,4 +21,13 @@ public class Copy extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Book book;
+
+    @Override
+    public String toString() {
+        return "Copy{" +
+                "code='" + code + '\'' +
+                ", isAvailable=" + isAvailable +
+                + '\'' + ", status=" + status +
+                '}';
+    }
 }
