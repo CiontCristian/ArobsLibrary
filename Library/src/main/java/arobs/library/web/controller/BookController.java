@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/book")
@@ -55,5 +56,18 @@ public class BookController {
         Book savedBook = bookService.saveBook(book);
         logger.trace("In BookController, method=saveBook, savedBook={}", savedBook);
         return bookWithoutCopiesConverter.convertModelToDto(savedBook);
+    }
+
+    @RequestMapping(value = "/modifyBook", method = RequestMethod.POST)
+    BookWithoutCopiesDTO modifyBook(@RequestBody BookWithoutCopiesDTO bookWithoutCopiesDTO){
+        logger.trace("In BookController, method=modifyBook, bookDTO={}", bookWithoutCopiesDTO);
+        Book book = bookWithoutCopiesConverter.convertDtoToModel(bookWithoutCopiesDTO);
+
+        Optional<Book> updatedBook = bookService.modifyBook(book);
+        if(updatedBook.isEmpty()){
+            return null;
+        }
+        logger.trace("In BookController, method=modifyBook, updatedBook={}", updatedBook);
+        return bookWithoutCopiesConverter.convertModelToDto(updatedBook.get());
     }
 }

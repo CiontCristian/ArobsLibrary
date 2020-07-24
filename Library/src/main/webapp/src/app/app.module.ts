@@ -10,6 +10,10 @@ import {FormsModule} from "@angular/forms";
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import {EmployeeService} from "./shared/employee.service";
+import { BookListComponent } from './book-list/book-list.component';
+import {BookService} from "./shared/book.service";
+import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,10 @@ import {EmployeeService} from "./shared/employee.service";
     MenuComponent,
     MainPageComponent,
     LoginPageComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    BookListComponent,
+    EmployeeListComponent,
+    EmployeeDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +32,7 @@ import {EmployeeService} from "./shared/employee.service";
     HttpClientModule,
     FormsModule
   ],
-  providers: [EmployeeService],
+  providers: [EmployeeService, BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,11 +7,14 @@ import arobs.library.web.dto.EmployeeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +26,13 @@ public class EmployeeController {
     private EmployeeService employeeService;
     @Autowired
     private EmployeeConverter employeeConverter;
+
+    @RequestMapping(value = "/getAllEmployees", method = RequestMethod.GET)
+    List<EmployeeDTO> getAllEmployees(){
+        List<Employee> employees = employeeService.findAllEmployees();
+
+        return employeeConverter.convertModelsToDtos(employees);
+    }
 
     @RequestMapping(value = "/checkIfEmployeeExists", method = RequestMethod.POST)
     EmployeeDTO checkIfEmployeeExists(@RequestBody String[] args){
@@ -49,5 +59,24 @@ public class EmployeeController {
         return employeeConverter.convertModelToDto(employeeService.saveEmployee(
                 employeeConverter.convertDtoToModel(employeeDTO)
         ));
+    }
+
+    @RequestMapping(value = "/modifyEmployee", method = RequestMethod.POST)
+    EmployeeDTO modifyEmployee(@RequestBody EmployeeDTO employeeDTO){
+        logger.trace("In EmployeeController, method=modifyEmployee, employeeDTO={}", employeeDTO);
+        Employee employee = employeeConverter.convertDtoToModel(employeeDTO);
+
+        Optional<Employee> updatedEmployee = employeeService.modifyEmployee(employee);
+
+        if(updatedEmployee.isEmpty()){
+            return null;
+        }
+        return employeeConverter.convertModelToDto(updatedEmployee.get());
+    }
+
+    @RequestMapping(value = "/deleteEmployee", method = RequestMethod.POST)
+    ResponseEntity<?> deleteEmployee(@RequestBody Long id){
+        employeeService.deleteEmployee(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,6 +1,8 @@
 <div class="menu">
   <div class="menu-items">
     <p *ngIf="employee">Logged as {{employee.name}}</p>
+    <a routerLink="book-list" *ngIf="employee !== null && employee.role === 'Admin'">Manage Books</a>
+    <a routerLink="employee-list" *ngIf="employee !== null && employee.role === 'Admin'">Manage Employees</a>
     <a routerLink="register-page" *ngIf="employee === null">Register</a>
     <a routerLink="login-page" *ngIf="employee === null">Login</a>
     <a routerLink="" *ngIf="employee !== null" (click)="logout()">Logout</a>
