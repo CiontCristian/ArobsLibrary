@@ -1,0 +1,23 @@
+<label>Title:
+  <input #title/>
+  <br/>
+</label>
+
+<label>Author:
+  <input #author/>
+  <br/>
+</label>
+
+<label>Tags:
+  <input #tags/>
+  <br/>
+</label>
+
+<label>Description:
+  <input #description/>
+  <br/>
+</label>
+
+<button (click)="saveBook(title.value, author.value, tags.value, description.value)">
+  Save
+</button>

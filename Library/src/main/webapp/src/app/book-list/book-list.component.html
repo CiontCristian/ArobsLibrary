@@ -1,1 +1,18 @@
-<p>book-list works!</p>
+<div *ngIf="selectedBook">
+  <h2>{{selectedBook.title | uppercase}} was selected</h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>
+
+<h2>Books</h2>
+<ol class="books">
+  <li *ngFor="let book of books"
+      (click)="onSelect(book)">
+    {{book.title}}
+    {{book.author}}
+    {{book.tags}}
+    {{book.description}}
+    {{book.date | date:'yyyy-MM-dd'}}
+  </li>
+</ol><br/>
+
+<button (click)="addNewBook()">Add New Book</button>

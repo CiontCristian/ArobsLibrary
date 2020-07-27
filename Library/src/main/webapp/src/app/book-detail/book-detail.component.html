@@ -1,0 +1,25 @@
+<div *ngIf="book">
+  <h2>Book {{book.title}} details</h2>
+  <div>
+    <label>Title: </label>
+    <input [(ngModel)]="book.title" placeholder="title">
+  </div>
+  <div>
+    <label>Author: </label>
+    <input [(ngModel)]="book.author" placeholder="author">
+  </div>
+  <div>
+    <label>Tags: </label>
+    <input [(ngModel)]="book.tags" placeholder="tags">
+  </div>
+  <div>
+    <label>Date: </label>
+    <input type="date" [(ngModel)]="book.date" placeholder="date">
+  </div>
+  <div>
+    <label>Tags: </label>
+    <textarea  rows="8" cols="30" [(ngModel)]="book.description" placeholder="description"></textarea>
+  </div>
+  <button (click)="goBack()">Back</button>
+  <button (click)="modify()">Save Changes</button>
+</div>
