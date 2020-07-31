@@ -10,7 +10,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
-public class EmployeeDTO extends BaseDTO{
+public class EmployeeWithoutRequestsDTO extends BaseDTO{
     private String name;
     private String email;
     private String role;

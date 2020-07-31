@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface BookService {
     List<Book> findAllBooksWithoutCopies();
     List<Book> findAllBooksWithCopies();
+    Optional<Book> findOne(Long id);
     Book saveBook(Book book);
     Optional<Book> modifyBook(Book book);
     void deleteBook(Long id);

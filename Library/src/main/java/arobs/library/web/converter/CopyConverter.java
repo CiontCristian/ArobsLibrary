@@ -28,7 +28,7 @@ public class CopyConverter extends BaseConverter<Copy, CopyDTO> {
                 .code(copy.getCode())
                 .isAvailable(copy.getIsAvailable())
                 .status(copy.getStatus())
-                .book(bookWithoutCopiesConverter.convertModelToDto(copy.getBook()))
+                .book(copy.getBook() == null ? null : bookWithoutCopiesConverter.convertModelToDto(copy.getBook()))
                 .build();
         dto.setId(copy.getId());
         return dto;

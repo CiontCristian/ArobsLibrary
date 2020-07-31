@@ -1,13 +1,13 @@
 package arobs.library.web.converter;
 
 import arobs.library.core.model.Employee;
-import arobs.library.web.dto.EmployeeDTO;
+import arobs.library.web.dto.EmployeeWithoutRequestsDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmployeeConverter extends BaseConverter<Employee, EmployeeDTO> {
+public class EmployeeWithoutRequestsConverter extends BaseConverter<Employee, EmployeeWithoutRequestsDTO> {
     @Override
-    public Employee convertDtoToModel(EmployeeDTO dto) {
+    public Employee convertDtoToModel(EmployeeWithoutRequestsDTO dto) {
         Employee employee = Employee.builder()
                 .email(dto.getEmail())
                 .name(dto.getName())
@@ -20,8 +20,8 @@ public class EmployeeConverter extends BaseConverter<Employee, EmployeeDTO> {
     }
 
     @Override
-    public EmployeeDTO convertModelToDto(Employee employee) {
-        EmployeeDTO dto = EmployeeDTO.builder()
+    public EmployeeWithoutRequestsDTO convertModelToDto(Employee employee) {
+        EmployeeWithoutRequestsDTO dto = EmployeeWithoutRequestsDTO.builder()
                 .email(employee.getEmail())
                 .name(employee.getName())
                 .password(employee.getPassword())

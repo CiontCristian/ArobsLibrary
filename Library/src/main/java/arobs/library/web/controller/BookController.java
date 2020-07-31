@@ -9,10 +9,7 @@ import arobs.library.web.dto.BookWithoutCopiesDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +43,16 @@ public class BookController {
         List<Book> books = bookService.findAllBooksWithCopies();
         logger.trace("In BookController, method=getAllBooksWithCopies, books={}", books);
         return new ArrayList<>(bookWithCopiesConverter.convertModelsToDtos(books));
+    }
+
+    @RequestMapping(value = "/getOneBook", method = RequestMethod.GET)
+    BookWithoutCopiesDTO getOneBook(@RequestParam Long id){
+        Optional<Book> book = bookService.findOne(id);
+        if(book.isEmpty()){
+            return null;
+        }
+
+        return bookWithoutCopiesConverter.convertModelToDto(book.get());
     }
 
     @RequestMapping(value = "/saveBook", method = RequestMethod.POST)

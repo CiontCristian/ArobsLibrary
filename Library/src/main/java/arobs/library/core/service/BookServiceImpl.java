@@ -4,12 +4,13 @@ import arobs.library.core.model.Book;
 import arobs.library.core.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@Service
 public class BookServiceImpl implements BookService{
     @Autowired
     private BookRepository bookRepository;
@@ -22,6 +23,11 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<Book> findAllBooksWithCopies() {
         return bookRepository.findAllWithCopies();
+    }
+
+    @Override
+    public Optional<Book> findOne(Long id) {
+        return bookRepository.findBookById(id);
     }
 
     @Override
