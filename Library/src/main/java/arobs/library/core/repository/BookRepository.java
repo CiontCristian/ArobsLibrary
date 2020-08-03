@@ -25,4 +25,6 @@ public interface BookRepository extends JPARepository<Book, Long> {
 
     Optional<Book> findBookById(@Param("id") Long id);
 
+    Optional<Book> findBookByTitle(@Param("title") String title);
+
 }

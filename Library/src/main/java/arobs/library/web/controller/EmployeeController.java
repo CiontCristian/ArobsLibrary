@@ -47,7 +47,7 @@ public class EmployeeController {
         String email = args[0];
         String password = args[1];
 
-        Optional<Employee> employee = employeeService.getEmployeeByEmail(email);
+        Optional<Employee> employee = employeeService.findEmployeeByEmail(email);
         logger.trace("In EmployeeController, method=checkIfEmployeeExists, employeeDTO={}", employee);
         if(employee.isPresent() && employee.get().getPassword().equals(password)){
             return employeeWithoutRequestsConverter.convertModelToDto(employee.get());
@@ -59,7 +59,7 @@ public class EmployeeController {
     @RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
     EmployeeWithoutRequestsDTO saveEmployee(@RequestBody EmployeeWithoutRequestsDTO employeeDTO){
         logger.trace("In EmployeeController, method=saveEmployee, employeeDTO={}", employeeDTO);
-        Optional<Employee> employee = employeeService.getEmployeeByEmail(employeeDTO.getEmail());
+        Optional<Employee> employee = employeeService.findEmployeeByEmail(employeeDTO.getEmail());
 
         if(employee.isPresent()){
             return null;

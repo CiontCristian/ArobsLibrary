@@ -27,8 +27,10 @@ export class EmployeeService{
   }
 
   delete(id: number): Observable<any>{
+    const url = `${this.employeeURL}/deleteEmployee/${id}`;
+
     return this.httpClient
-      .post<any>(this.employeeURL + '/deleteEmployee', id);
+      .delete(url);
   }
 
   getAll(): Observable<Employee[]>{

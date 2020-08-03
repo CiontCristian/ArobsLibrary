@@ -3,6 +3,7 @@ package arobs.library.core.model;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.util.Date;
@@ -14,10 +15,10 @@ import java.util.Date;
 @Data
 @Builder
 public class BookRent extends BaseEntity<Long>{
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Employee employee;
 
     @OneToOne

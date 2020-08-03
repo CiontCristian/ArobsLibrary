@@ -2,6 +2,7 @@ package arobs.library.core.service;
 
 
 
+import arobs.library.core.model.BookRequest;
 import arobs.library.core.model.Employee;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface EmployeeService {
     Employee saveEmployee(Employee employee);
     Optional<Employee> modifyEmployee(Employee employee);
     void deleteEmployee(Long id);
-    Optional<Employee> getEmployeeByEmail(String email);
+    Optional<Employee> findEmployeeByEmail(String email);
 }

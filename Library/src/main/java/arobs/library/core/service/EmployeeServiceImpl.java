@@ -1,6 +1,8 @@
 package arobs.library.core.service;
 
+import arobs.library.core.model.BookRequest;
 import arobs.library.core.model.Employee;
+import arobs.library.core.repository.BookRequestRepository;
 import arobs.library.core.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,6 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private EmployeeRepository employeeRepository;
-
 
     @Override
     public List<Employee> findAllEmployeesWithRequests() {
@@ -52,10 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Optional<Employee> getEmployeeByEmail(String email) {
+    public Optional<Employee> findEmployeeByEmail(String email) {
         return employeeRepository.findAll().stream()
                 .filter(employee -> employee.getEmail().equals(email)).findFirst();
     }
-
-
 }

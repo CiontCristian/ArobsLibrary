@@ -2,10 +2,10 @@ package arobs.library.core.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@NamedEntityGraph(name = "BookRequestWithEmployee",
+        attributeNodes = @NamedAttributeNode(value = "employee"))
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
