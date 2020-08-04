@@ -34,7 +34,7 @@ export class EmployeeService{
   }
 
   getAll(): Observable<Employee[]>{
-    return this.httpClient.get<Array<Employee>>(this.employeeURL + "/getAllEmployees");
+    return this.httpClient.get<Array<Employee>>(this.employeeURL + "/getAllEmployeesWithRequests");
   }
 
   getOne(id: number): Observable<Employee>{

@@ -4,6 +4,9 @@ import {BookService} from "../shared/book.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Location} from "@angular/common";
 import {switchMap} from "rxjs/operators";
+import {Copy} from "../shared/copy.model";
+import {BookRent} from "../shared/BookRent.model";
+import {Employee} from "../shared/employee.model";
 
 @Component({
   selector: 'app-book-detail',
@@ -12,6 +15,8 @@ import {switchMap} from "rxjs/operators";
 })
 export class BookDetailComponent implements OnInit {
   @Input() book: Book;
+  availableCopies: Copy[] = null;
+  currentUser: Employee = JSON.parse(sessionStorage.getItem("user"));
 
   constructor(private bookService: BookService,
               private route: ActivatedRoute,
@@ -19,7 +24,12 @@ export class BookDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.pipe(switchMap((params: Params) => this.bookService.getOneBook(+params['id'])))
-      .subscribe(book => this.book = book);
+      .subscribe(book => {
+        this.book = book;
+        this.bookService.getAvailableCopies(this.book.id).subscribe(copies => this.availableCopies = copies);
+
+      });
+    //this.bookService.getAvailableCopies(this.book).subscribe(copies => this.availableCopies = copies);
   }
 
   goBack(): void{
@@ -28,6 +38,16 @@ export class BookDetailComponent implements OnInit {
 
   modify(): void{
     this.bookService.modifyBook(this.book).subscribe(_ => this.goBack());
+  }
+
+  rentBook() {
+    var returnDate = new Date();
+    returnDate.setMonth(returnDate.getMonth() + 1);
+
+    let bookRent: BookRent = new BookRent(-1, new Date(), new Date(returnDate), "on_going", null, this.book, this.currentUser,
+      this.availableCopies[Math.floor(Math.random() * this.availableCopies.length)]);
+
+    this.bookService.rentBook(bookRent).subscribe();
   }
 
 }

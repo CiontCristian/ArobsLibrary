@@ -1,6 +1,7 @@
 package arobs.library.core.service;
 
 import arobs.library.core.model.Book;
+import arobs.library.core.model.BookRent;
 import arobs.library.core.model.BookRequest;
 import arobs.library.core.model.RentRequest;
 
@@ -27,4 +28,10 @@ public interface BookService {
     void deleteRentRequest(Long id);
     Optional<RentRequest> updateRentRequestStatus(RentRequest rentRequest);
     List<RentRequest> getAllRentRequests();
+
+    //Methods for BookRent Entity
+    Optional<BookRent> saveBookRent(BookRent bookRent);
+    void deleteBookRent(Long id);
+    Optional<BookRent> modifyBookRent(BookRent bookRent);
+    List<BookRent> getAllBookRents();
 }

@@ -1,9 +1,12 @@
 package arobs.library.web.controller;
 
 import arobs.library.core.model.Book;
+import arobs.library.core.model.BookRent;
 import arobs.library.core.service.BookService;
+import arobs.library.web.converter.BookRentConverter;
 import arobs.library.web.converter.BookWithCopiesConverter;
 import arobs.library.web.converter.BookWithoutCopiesConverter;
+import arobs.library.web.dto.BookRentDTO;
 import arobs.library.web.dto.BookWithCopiesDTO;
 import arobs.library.web.dto.BookWithoutCopiesDTO;
 import org.slf4j.Logger;
@@ -11,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.plaf.OptionPaneUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +26,12 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
-
     @Autowired
     private BookWithoutCopiesConverter bookWithoutCopiesConverter;
-
     @Autowired
     private BookWithCopiesConverter bookWithCopiesConverter;
+    @Autowired
+    private BookRentConverter bookRentConverter;
 
     @RequestMapping(value = "/getAllBooksWithoutCopies", method = RequestMethod.GET)
     List<BookWithoutCopiesDTO> getAllBooksWithoutCopies(){
@@ -76,5 +80,16 @@ public class BookController {
         }
         logger.trace("In BookController, method=modifyBook, updatedBook={}", updatedBook);
         return bookWithoutCopiesConverter.convertModelToDto(updatedBook.get());
+    }
+
+    @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
+    BookRentDTO rentBook(@RequestBody BookRentDTO bookRentDTO){
+        BookRent bookRent = bookRentConverter.convertDtoToModel(bookRentDTO);
+
+        Optional<BookRent> savedBookRent = bookService.saveBookRent(bookRent);
+        if(savedBookRent.isEmpty()){
+            return null;
+        }
+        return bookRentConverter.convertModelToDto(savedBookRent.get());
     }
 }

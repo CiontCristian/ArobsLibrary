@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Book} from "../shared/book.model";
 import {BookService} from "../shared/book.service";
 import {Router} from "@angular/router";
+import {BookRent} from "../shared/BookRent.model";
+import {Employee} from "../shared/employee.model";
 
 @Component({
   selector: 'app-book-list',
@@ -35,4 +37,5 @@ export class BookListComponent implements OnInit {
   addNewBook() {
     this.router.navigate(['book-new']);
   }
+
 }

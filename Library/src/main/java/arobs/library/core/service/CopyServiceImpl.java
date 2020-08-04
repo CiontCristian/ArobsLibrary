@@ -1,14 +1,17 @@
 package arobs.library.core.service;
 
+import arobs.library.core.model.Book;
 import arobs.library.core.model.Copy;
 import arobs.library.core.repository.CopyJDBCRepository;
 import arobs.library.core.repository.CopyRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CopyServiceImpl extends CopyJDBCRepository implements CopyService {
@@ -18,6 +21,15 @@ public class CopyServiceImpl extends CopyJDBCRepository implements CopyService {
     @Override
     public List<Copy> getAllCopies() {
         return copyRepository.findAllWithBook();
+    }
+
+    @Override
+    public List<Copy> getAllAvailableCopies(Long bookID) {
+        return copyRepository.findAllWithBook()
+                .stream()
+                .filter(copy -> copy.getBook().getId().equals(bookID))
+                .filter(copy -> copy.getStatus().equals("Available") && copy.getIsAvailable())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -34,11 +46,9 @@ public class CopyServiceImpl extends CopyJDBCRepository implements CopyService {
             return Optional.empty();
         }
 
-        copy.setCode(oldCopy.getCode());
-        copy.setIsAvailable(oldCopy.getIsAvailable());
-        copy.setStatus(oldCopy.getStatus());
+        oldCopy.setStatus(copy.getStatus());
 
-        return Optional.of(copy);
+        return Optional.of(oldCopy);
     }
 
     @Override

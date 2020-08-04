@@ -23,4 +23,9 @@ public class BookRequest extends BaseEntity<Long>{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Employee employee;
+
+    @Override
+    public String toString(){
+        return "book request";
+    }
 }

@@ -23,7 +23,7 @@ export class RegisterPageComponent implements OnInit {
       return;
     }
 
-    let employeeToRegister: Employee = new Employee(null, name, email, this.role, password);
+    let employeeToRegister: Employee = new Employee(null, name, email, this.role, password, null);
     this.employeeService.register(employeeToRegister).subscribe(user => this.employee = user);
 
     if(this.employee === null){

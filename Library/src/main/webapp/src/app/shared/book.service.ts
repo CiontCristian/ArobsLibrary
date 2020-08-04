@@ -3,10 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Book} from "./book.model";
 import {map} from "rxjs/operators";
+import {BookRent} from "./BookRent.model";
+import {Copy} from "./copy.model";
 
 @Injectable()
 export class BookService {
   private bookURL = 'http://localhost:8080/book';
+  private copyURL = 'http://localhost:8080/copy';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -25,5 +28,13 @@ export class BookService {
 
   modifyBook(book: Book): Observable<Book>{
     return this.httpClient.post<Book>(this.bookURL + '/modifyBook', book);
+  }
+
+  rentBook(bookRent: BookRent): Observable<BookRent>{
+    return this.httpClient.post<BookRent>(this.bookURL + '/rentBook', bookRent);
+  }
+
+  getAvailableCopies(bookID: number): Observable<Copy[]>{
+    return this.httpClient.post<Copy[]>(this.copyURL + '/getAllAvailableCopies', bookID);
   }
 }

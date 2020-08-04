@@ -1,12 +1,13 @@
 package arobs.library.core.service;
 
-import arobs.library.core.model.Book;
-import arobs.library.core.model.BookRequest;
-import arobs.library.core.model.RentRequest;
+import arobs.library.core.model.*;
+import arobs.library.core.repository.BookRentRepository;
 import arobs.library.core.repository.BookRepository;
 import arobs.library.core.repository.BookRequestRepository;
 import arobs.library.core.repository.RentRequestRepository;
 import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +17,18 @@ import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService{
+    public static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
+
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private CopyService copyService;
     @Autowired
     private BookRequestRepository bookRequestRepository;
     @Autowired
     private RentRequestRepository rentRequestRepository;
+    @Autowired
+    private BookRentRepository bookRentRepository;
 
     @Override
     public List<Book> findAllBooksWithoutCopies() {
@@ -70,11 +77,12 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    @Transactional
     public Boolean checkAvailableCopies(Book book) {
-        Hibernate.initialize(book.getCopies());
+        logger.trace("In BookService, method=checkAvailableCopies, book={}", book);
+        //Hibernate.initialize(book.getCopies());
         long nrOfAvailableCopies = book.getCopies()
-                .stream().filter(copy -> copy.getStatus().equals("Available"))
+                .stream()
+                .filter(copy -> copy.getStatus().equals("Available") && copy.getIsAvailable())
                 .count();
 
         return nrOfAvailableCopies > 0;
@@ -124,5 +132,43 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<RentRequest> getAllRentRequests() {
         return rentRequestRepository.findAll();
+    }
+
+    @Override
+    public Optional<BookRent> saveBookRent(BookRent bookRent) {
+        if(!checkAvailableCopies(bookRent.getBook())){
+            logger.trace("In BookService, method=saveBookRent, There is a rent request for the book={}", bookRent.getBook());
+            return Optional.empty();
+        }
+        Copy copy = bookRent.getCopy();
+        copy.setStatus("Rented");
+
+        copyService.modifyCopy(copy);
+
+        return Optional.of(bookRentRepository.save(bookRent));
+    }
+
+    @Override
+    public void deleteBookRent(Long id) {
+        bookRentRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Optional<BookRent> modifyBookRent(BookRent bookRent) {
+        BookRent newBookRent = bookRentRepository.findById(bookRent.getId()).orElse(null);
+        if(newBookRent == null){
+            return Optional.empty();
+        }
+
+        newBookRent.setStatus(bookRent.getStatus());
+        newBookRent.setGrade(bookRent.getGrade());
+
+        return Optional.of(newBookRent);
+    }
+
+    @Override
+    public List<BookRent> getAllBookRents() {
+        return bookRentRepository.findAll();
     }
 }

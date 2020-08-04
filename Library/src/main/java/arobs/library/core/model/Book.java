@@ -27,6 +27,6 @@ public class Book extends BaseEntity<Long> {
     private String tags;
     private Date date;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "book", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "book", orphanRemoval = true)
     private List<Copy> copies;
 }
