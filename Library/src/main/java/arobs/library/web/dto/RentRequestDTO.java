@@ -10,8 +10,9 @@ import java.util.Date;
 @ToString(callSuper = true)
 @Builder
 public class RentRequestDTO extends BaseDTO{
-    private BookWithoutCopiesDTO book;
+    private BookWithCopiesDTO book;
     private EmployeeWithoutRequestsDTO employee;
+    private CopyDTO copy;
     private Date requestDate;
     private String status;
 }

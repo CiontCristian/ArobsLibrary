@@ -33,6 +33,15 @@ public class CopyServiceImpl extends CopyJDBCRepository implements CopyService {
     }
 
     @Override
+    public List<Copy> getAllRentedCopies(Long bookID) {
+        return copyRepository.findAllWithBook()
+                .stream()
+                .filter(copy -> copy.getBook().getId().equals(bookID))
+                .filter(copy -> copy.getStatus().equals("Rented"))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Copy saveCopy(Copy copy) {
         return copyRepository.save(copy);
     }
@@ -47,6 +56,7 @@ public class CopyServiceImpl extends CopyJDBCRepository implements CopyService {
         }
 
         oldCopy.setStatus(copy.getStatus());
+        oldCopy.setIsAvailable(copy.getIsAvailable());
 
         return Optional.of(oldCopy);
     }

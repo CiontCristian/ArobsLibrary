@@ -7,6 +7,7 @@ import {switchMap} from "rxjs/operators";
 import {Copy} from "../shared/copy.model";
 import {BookRent} from "../shared/BookRent.model";
 import {Employee} from "../shared/employee.model";
+import {RentRequest} from "../shared/RentRequest.model";
 
 @Component({
   selector: 'app-book-detail',
@@ -16,6 +17,7 @@ import {Employee} from "../shared/employee.model";
 export class BookDetailComponent implements OnInit {
   @Input() book: Book;
   availableCopies: Copy[] = null;
+  rentedCopies: Copy[] = null;
   currentUser: Employee = JSON.parse(sessionStorage.getItem("user"));
 
   constructor(private bookService: BookService,
@@ -27,9 +29,8 @@ export class BookDetailComponent implements OnInit {
       .subscribe(book => {
         this.book = book;
         this.bookService.getAvailableCopies(this.book.id).subscribe(copies => this.availableCopies = copies);
-
+        this.bookService.getRentedCopies(this.book.id).subscribe(copies => this.rentedCopies = copies);
       });
-    //this.bookService.getAvailableCopies(this.book).subscribe(copies => this.availableCopies = copies);
   }
 
   goBack(): void{
@@ -50,4 +51,10 @@ export class BookDetailComponent implements OnInit {
     this.bookService.rentBook(bookRent).subscribe();
   }
 
+  requestRent() {
+    let requestRent: RentRequest = new RentRequest(-1, new Date(), "waiting for available copy", this.book,
+      this.currentUser, this.rentedCopies[Math.floor(Math.random() * this.rentedCopies.length)]);
+
+    this.bookService.requestBookRent(requestRent).subscribe();
+  }
 }

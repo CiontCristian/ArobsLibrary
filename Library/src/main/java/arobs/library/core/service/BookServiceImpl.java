@@ -92,6 +92,7 @@ public class BookServiceImpl implements BookService{
     public Optional<BookRequest> saveBookRequest(BookRequest bookRequest) {
         Optional<Book> book = findBookByTitle(bookRequest.getTitle());
         if(book.isPresent()){
+            logger.trace("In BookService, method=saveBookRequest, The book already exists in the system");
             return Optional.empty();
         }
 
@@ -106,9 +107,15 @@ public class BookServiceImpl implements BookService{
     @Override
     public Optional<RentRequest> saveRentRequest(RentRequest rentRequest) {
         if(checkAvailableCopies(rentRequest.getBook())){
+            logger.trace("In BookService, method=saveRentRequest, There are copies available for the book={} ", rentRequest.getBook());
             return Optional.empty();
         }
 
+        /*Copy copy = rentRequest.getCopy();
+        copy.setStatus("Pending");
+
+        copyService.modifyCopy(copy);
+        */
         return Optional.of(rentRequestRepository.save(rentRequest));
     }
 

@@ -16,6 +16,7 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookNewComponent } from './book-new/book-new.component';
+import { BookRequestComponent } from './book-request/book-request.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { BookNewComponent } from './book-new/book-new.component';
     EmployeeListComponent,
     EmployeeDetailComponent,
     BookDetailComponent,
-    BookNewComponent
+    BookNewComponent,
+    BookRequestComponent
   ],
   imports: [
     BrowserModule,

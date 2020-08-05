@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -19,6 +20,9 @@ public class RentRequest extends BaseEntity<Long>{
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Employee employee;
+
+    @OneToOne
+    private Copy copy;
 
     private Date requestDate;
     private String status;

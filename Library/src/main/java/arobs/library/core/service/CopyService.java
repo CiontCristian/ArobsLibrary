@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface CopyService {
     List<Copy> getAllCopies();
     List<Copy> getAllAvailableCopies(Long bookID);
+    List<Copy> getAllRentedCopies(Long bookID);
     Copy saveCopy(Copy copy);
     Optional<Copy> modifyCopy(Copy copy);
 }

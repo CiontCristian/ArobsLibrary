@@ -46,6 +46,14 @@ public class CopyController {
         return copyConverter.convertModelsToDtos(copies);
     }
 
+    @RequestMapping(value = "/getAllRentedCopies", method = RequestMethod.POST)
+    List<CopyDTO> getAllRentedCopies(@RequestBody Long bookID){
+        List<Copy> copies = copyService.getAllRentedCopies(bookID);
+        logger.trace("In CopyController, method=getAllRentedCopies, copies={}", copies);
+
+        return copyConverter.convertModelsToDtos(copies);
+    }
+
     @RequestMapping(value = "/getAllCopiesJDBC", method = RequestMethod.GET)
     List<CopyDTO> getAllCopiesJDBC(){
         List<Copy> copies = copyService.getAllCopiesJDBC();

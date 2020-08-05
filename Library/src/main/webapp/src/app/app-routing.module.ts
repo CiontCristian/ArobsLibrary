@@ -8,6 +8,7 @@ import {EmployeeListComponent} from "./employee-list/employee-list.component";
 import {EmployeeDetailComponent} from "./employee-detail/employee-detail.component";
 import {BookDetailComponent} from "./book-detail/book-detail.component";
 import {BookNewComponent} from "./book-new/book-new.component";
+import {BookRequestComponent} from "./book-request/book-request.component";
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path: 'book-detail/:id', component: BookDetailComponent},
   {path: 'book-new', component: BookNewComponent},
   {path: 'employee-list', component: EmployeeListComponent},
-  {path: 'employee-detail/:id', component: EmployeeDetailComponent}
+  {path: 'employee-detail/:id', component: EmployeeDetailComponent},
+  {path: 'book-request', component: BookRequestComponent}
 ];
 
 @NgModule({
