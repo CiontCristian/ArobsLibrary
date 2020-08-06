@@ -4,6 +4,7 @@
     <a routerLink="book-list" *ngIf="employee !== null && employee.role === 'Admin'">Manage Books</a>
     <a routerLink="employee-list" *ngIf="employee !== null && employee.role === 'Admin'">Manage Employees</a>
     <a routerLink="book-request" *ngIf="employee !== null">Request Book</a>
+    <a routerLink="statistics" *ngIf="employee !== null && employee.role === 'Admin'">Statistics</a>
     <a routerLink="register-page" *ngIf="employee === null">Register</a>
     <a routerLink="login-page" *ngIf="employee === null">Login</a>
     <a routerLink="" *ngIf="employee !== null" (click)="logout()">Logout</a>

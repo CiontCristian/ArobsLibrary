@@ -13,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,5 +89,24 @@ public class EmployeeController {
     ResponseEntity<?> deleteEmployee(@PathVariable Long id){
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getAllLateEmployees", method = RequestMethod.GET)
+    List<EmployeeWithoutRequestsDTO> getAllLateEmployees(){
+        List<Employee> employees = employeeService.getAllLateEmployees();
+
+        return employeeWithoutRequestsConverter.convertModelsToDtos(employees);
+    }
+
+    @RequestMapping(value = "/topEmployeesByNrOfReadBooks", method = RequestMethod.GET)
+    List<EmployeeWithoutRequestsDTO> getTopEmployeesByNrOfReadBooks() throws ParseException {
+        Integer top = 2;
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = dateformat.parse("2020-08-02");
+        Date date2 = dateformat.parse("2020-10-11");
+
+        List<Employee> employees = employeeService.topEmployeesByNrOfReadBooks(top, date1, date2);
+
+        return employeeWithoutRequestsConverter.convertModelsToDtos(employees);
     }
 }

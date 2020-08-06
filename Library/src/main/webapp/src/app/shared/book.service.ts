@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {BookRent} from "./BookRent.model";
 import {Copy} from "./copy.model";
 import {RentRequest} from "./RentRequest.model";
+import {BookRequest} from "./BookRequest.model";
 
 @Injectable()
 export class BookService {
@@ -39,11 +40,19 @@ export class BookService {
     return this.httpClient.post<RentRequest>(this.bookURL + '/requestBookRent', rentRequest);
   }
 
+  requestBook(bookRequest: BookRequest): Observable<BookRequest>{
+    return this.httpClient.post<BookRequest>(this.bookURL + '/requestBook', bookRequest);
+  }
+
   getAvailableCopies(bookID: number): Observable<Copy[]>{
     return this.httpClient.post<Copy[]>(this.copyURL + '/getAllAvailableCopies', bookID);
   }
 
   getRentedCopies(bookID: number): Observable<Copy[]>{
     return this.httpClient.post<Copy[]>(this.copyURL + '/getAllRentedCopies', bookID);
+  }
+
+  getAllBookRequests(): Observable<BookRequest[]>{
+    return this.httpClient.get<BookRequest[]>(this.bookURL + "/getAllBookRequests");
   }
 }

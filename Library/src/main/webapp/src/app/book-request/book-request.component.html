@@ -1,1 +1,39 @@
-<h2>Book Requests</h2>
+<h2>Request a Book</h2>
+<label>Title:
+  <input #title/>
+  <br/>
+</label>
+
+<label>Author:
+  <input #author/>
+  <br/>
+</label>
+
+<label>Publisher:
+  <input #publisher/>
+  <br/>
+</label>
+
+<label>Website:
+  <input #website/>
+  <br/>
+</label>
+
+<label>Cost:
+  <input #cost/>
+  <br/>
+</label>
+
+<label>Status:
+  <input #status/>
+  <br/>
+</label>
+
+<label>Nr. of Copies:
+  <input #copies/>
+  <br/>
+</label>
+
+<button (click)="requestBook(title.value, author.value, publisher.value, website.value, cost.value, status.value, copies.value)">Request Book</button>
+
+

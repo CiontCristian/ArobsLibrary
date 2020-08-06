@@ -2,16 +2,11 @@ package arobs.library.web.controller;
 
 import arobs.library.core.model.Book;
 import arobs.library.core.model.BookRent;
+import arobs.library.core.model.BookRequest;
 import arobs.library.core.model.RentRequest;
 import arobs.library.core.service.BookService;
-import arobs.library.web.converter.BookRentConverter;
-import arobs.library.web.converter.BookWithCopiesConverter;
-import arobs.library.web.converter.BookWithoutCopiesConverter;
-import arobs.library.web.converter.RentRequestConverter;
-import arobs.library.web.dto.BookRentDTO;
-import arobs.library.web.dto.BookWithCopiesDTO;
-import arobs.library.web.dto.BookWithoutCopiesDTO;
-import arobs.library.web.dto.RentRequestDTO;
+import arobs.library.web.converter.*;
+import arobs.library.web.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +34,8 @@ public class BookController {
     private BookRentConverter bookRentConverter;
     @Autowired
     private RentRequestConverter rentRequestConverter;
+    @Autowired
+    private BookRequestConverter bookRequestConverter;
 
     @RequestMapping(value = "/getAllBooksWithoutCopies", method = RequestMethod.GET)
     List<BookWithoutCopiesDTO> getAllBooksWithoutCopies(){
@@ -117,5 +114,24 @@ public class BookController {
         }
 
         return rentRequestConverter.convertModelToDto(savedRentRequest.get());
+    }
+
+    @RequestMapping(value = "/requestBook", method = RequestMethod.POST)
+    BookRequestDTO requestBook(@RequestBody BookRequestDTO bookRequestDTO){
+        BookRequest bookRequest = bookRequestConverter.convertDtoToModel(bookRequestDTO);
+
+        Optional<BookRequest> savedBookRequest = bookService.saveBookRequest(bookRequest);
+        if(savedBookRequest.isEmpty()){
+            return null;
+        }
+
+        return bookRequestConverter.convertModelToDto(savedBookRequest.get());
+    }
+
+    @RequestMapping(value = "/getAllBookRequests", method = RequestMethod.GET)
+    List<BookRequestDTO> getAllBookRequests(){
+        List<BookRequest> requests = bookService.getAllBookRequests();
+
+        return bookRequestConverter.convertModelsToDtos(requests);
     }
 }

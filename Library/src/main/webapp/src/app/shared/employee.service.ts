@@ -37,6 +37,10 @@ export class EmployeeService{
     return this.httpClient.get<Array<Employee>>(this.employeeURL + "/getAllEmployeesWithRequests");
   }
 
+  getAllLateEmployees(): Observable<Employee[]>{
+    return this.httpClient.get<Array<Employee>>(this.employeeURL + "/getAllLateEmployees");
+  }
+
   getOne(id: number): Observable<Employee>{
     return this.getAll().pipe(
       map(employees => employees.find(employee => employee.id === id))

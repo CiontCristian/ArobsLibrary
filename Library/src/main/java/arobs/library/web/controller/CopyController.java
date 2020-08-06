@@ -61,6 +61,14 @@ public class CopyController {
         return copyConverter.convertModelsToDtos(copies);
     }
 
+    @RequestMapping(value = "/saveCopy", method = RequestMethod.POST)
+    CopyDTO saveCopy(CopyDTO copyDTO){
+        Copy copy = copyConverter.convertDtoToModel(copyDTO);
+
+        Copy savedCopy = copyService.saveCopy(copy);
+        return copyConverter.convertModelToDto(savedCopy);
+    }
+
     @RequestMapping(value = "/modifyCopy", method = RequestMethod.PUT)
     CopyDTO modifyCopy(CopyDTO copyDTO){
         Copy copy = copyConverter.convertDtoToModel(copyDTO);

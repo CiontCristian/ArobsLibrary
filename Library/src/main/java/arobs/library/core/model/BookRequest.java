@@ -21,7 +21,7 @@ public class BookRequest extends BaseEntity<Long>{
     private Double cost;
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Employee employee;
 
     @Override

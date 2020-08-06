@@ -17,6 +17,7 @@ import { EmployeeDetailComponent } from './employee-detail/employee-detail.compo
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookNewComponent } from './book-new/book-new.component';
 import { BookRequestComponent } from './book-request/book-request.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { BookRequestComponent } from './book-request/book-request.component';
     EmployeeDetailComponent,
     BookDetailComponent,
     BookNewComponent,
-    BookRequestComponent
+    BookRequestComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,

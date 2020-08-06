@@ -21,3 +21,18 @@
 <button (click)="saveBook(title.value, author.value, tags.value, description.value)">
   Save
 </button>
+
+<div *ngIf="currentUser.role === 'Admin'">
+  <button (click)="showRequests = true">Show Requests</button>
+</div>
+<h2 *ngIf="showRequests">Book Requests</h2>
+<ol *ngIf="showRequests">
+  <li *ngFor="let req of bookRequests">
+    {{req.title}}
+    {{req.author}}
+    {{req.publisher}}
+    {{req.website}}
+    {{req.status}}
+    {{req.nrOfCopies}}
+  </li>
+</ol><br/>
